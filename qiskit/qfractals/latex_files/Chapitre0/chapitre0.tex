@@ -4,7 +4,64 @@
 
 Generative part of all experiments
 
-\section{General}
+\section{Base Z cercle}
+
+\begin{lstlisting}
+def complex_cal(qc, statevector_sim):
+    statevector_job = execute(qc, statevector_sim)
+    statevector_result = statevector_job.result()
+    psi = statevector_result.get_statevector()
+    z0 = psi[0]
+    z1 = psi[1]
+    if z1.real != 0 or z1.imag != 0:
+        z = z0/z1
+        z = round(z.real, 2) + round(z.imag, 2) * 1j
+    else:
+        z = 0
+    return z
+
+init_q = QuantumRegister(1, 'q')
+qc_cercle = QuantumCircuit(init_q)
+
+tab_cercle = [[], []]
+x_cercle = []
+y_cercle = []
+tab_temp = []
+z0 = 0+0j
+z1 = 0+0j
+z = 0+0j
+
+shots = 100
+max_shots = 1
+qc_cercle.h(init_q)
+for w in range(max_shots):
+    for i in range(shots):
+        qc_cercle.rz(pi/(shots/8), init_q)
+        z = complex_cal(qc_cercle, statevector_sim)
+        if z != 0:
+            tab_temp.append(z)
+    qc_cercle.barrier()
+    
+    if (w + 1) % 5 == 0:
+        print("Full circuit bloch :", w+1, "/", max_shots)
+
+print("Fini!")
+
+for i in tab_temp:
+    iteration = tab_temp.count(i)
+    if tab_cercle[0].count(i) < 1:
+        tab_cercle[0].append(i)
+        tab_cercle[1].append(iteration)
+
+for i in range(len(tab_cercle[0])):
+    x_cercle.append(tab_cercle[0][i].real)
+    y_cercle.append(tab_cercle[0][i].imag)
+
+print("Total of SV :", len(tab_temp))
+\end{lstlisting}
+
+
+\section{Generical functions}
 
 \subsection{Qubit and variable preparation}
 \begin{lstlisting}
@@ -83,7 +140,7 @@ for i in range(len(tab_temp[2])):
 print("Total of SV :", len(tab_temp[0]))
 \end{lstlisting}
 
-\subsection{Graph}
+\section{Graph}
 
 \begin{lstlisting}
 plt.scatter(x_cercle, y_cercle, c=tab_cercle[1], s=1, cmap="coolwarm")
