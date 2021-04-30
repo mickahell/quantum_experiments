@@ -1,12 +1,13 @@
-\chapter{Experiment 1}
+\chapter{Experiment 1 - State Vector - 1 qubit}
 
 \epigraph{\textit{On est trop souvent imprécis lorsqu'on fait une citation.}}{Quelqu'un, un jour.}
 
 Full 1st experiment explanation
 
-\section{General}
+\section{State Vector - 1 Qubit}
+\subsection{Base H with full Z rotation}
 
-\subsection{Code}
+\subsubsection{Code}
 \begin{lstlisting}
 print("Launch!")
 qc.h(init_q)
@@ -14,7 +15,6 @@ for w in range(max_shots):
     for i in range(shots):
         qc.rx(-pi/(shots-i), init_q)
         qc.rz(pi/(shots/8), init_q)
-        #qc.u(pi/(shots-i), pi/(shots/8), 0, init_q)
         z, z_north, z_south = complex_cal(qc, statevector_sim)
         if z != 0:
             if z_north != 0:
@@ -28,24 +28,128 @@ for w in range(max_shots):
     if (w + 1) % 5 == 0:
         print("Full circuit bloch :", w+1, "/", max_shots)
 
-print("Fini!")
+print("Done!")
 \end{lstlisting}
 
-\subsection{Run 1 full circuit block only}
+\subsubsection{Run 1 full circuit block only}
 
-\subsection{Run 10 full circuit block only}
+\subsubsection{Run 10 full circuit block only}
+\begin{figure}[ht!]
+        \centering
+        \begin{subfigure}[c]{0.5\textwidth}
+                \includegraphics[width=\textwidth]{Chapitre1/Figures/exp1_10_baseH_zoom.png}
+                \caption{Graph with zoom of [[-1:1][-1:1]]}
+        \end{subfigure}%
+        \caption{Resulting of 1000 data statevector}
+\end{figure}
 
-\subsection{Run 100 full circuit block only}
+\subsubsection{Run 100 full circuit block only}
 
 \begin{figure}[ht!]
         \centering
         \begin{subfigure}[c]{0.5\textwidth}
-                \includegraphics[width=\textwidth]{Chapitre1/Figures/exp1_100_nonZoom.png}
+                \includegraphics[width=\textwidth]{Chapitre1/Figures/exp1_100_baseH_nonZoom.png}
                 \caption{Graph from 10000 data statevector without zoom}
         \end{subfigure}%
         \begin{subfigure}[c]{0.5\textwidth}
-                \includegraphics[width=\textwidth]{Chapitre1/Figures/exp1_100_zoom.png}
+                \includegraphics[width=\textwidth]{Chapitre1/Figures/exp1_100_baseH_zoom.png}
                 \caption{Graph with zoom of [[-1:2][-1:1]]}
+        \end{subfigure}
+        \caption{Resulting of 10000 data statevector}
+\end{figure}
+
+\subsection{Base H with no-full Z rotation}
+
+\subsubsection{Code}
+\begin{lstlisting}
+print("Launch!")
+qc.h(init_q)
+for w in range(max_shots):
+    for i in range(shots):
+        qc.rx(-pi/(shots-i), init_q)
+        qc.rz(pi/(shots/8), init_q)
+        z, z_north, z_south = complex_cal(qc, statevector_sim)
+        if z != 0:
+            if z_north != 0:
+                tab_temp[0].append(z)
+                tab_temp[1].append(z_north)
+            if z_south != 0:
+                tab_temp[0].append(z)
+                tab_temp[2].append(z_south)
+    qc.barrier()
+    
+    if (w + 1) % 5 == 0:
+        print("Full circuit bloch :", w+1, "/", max_shots)
+
+print("Done!")
+\end{lstlisting}
+
+\subsubsection{Run 1 full circuit block only}
+
+\subsubsection{Run 10 full circuit block only}
+\begin{figure}[ht!]
+        \centering
+        \begin{subfigure}[c]{0.5\textwidth}
+                \includegraphics[width=\textwidth]{Chapitre1/Figures/exp1_10_baseH_halfZ_nonZoom.png}
+        \end{subfigure}%
+        \caption{Resulting of 1000 data statevector}
+\end{figure}
+
+\subsubsection{Run 100 full circuit block only}
+\begin{figure}[ht!]
+        \centering
+        \begin{subfigure}[c]{0.5\textwidth}
+                \includegraphics[width=\textwidth]{Chapitre1/Figures/exp1_100_baseH_halfZ_nonZoom.png}
+        \end{subfigure}%
+        \caption{Resulting of 1000 data statevector}
+\end{figure}
+
+\subsection{Base 0}
+\subsubsection{Code}
+\begin{lstlisting}
+print("Launch!")
+for w in range(max_shots):
+    for i in range(shots):
+        qc.rx(-pi/(shots-i), init_q)
+        qc.rz(pi/(shots/8), init_q)
+        z, z_north, z_south = complex_cal(qc, statevector_sim)
+        if z != 0:
+            if z_north != 0:
+                tab_temp[0].append(z)
+                tab_temp[1].append(z_north)
+            if z_south != 0:
+                tab_temp[0].append(z)
+                tab_temp[2].append(z_south)
+    qc.barrier()
+    
+    if (w + 1) % 5 == 0:
+        print("Full circuit bloch :", w+1, "/", max_shots)
+
+print("Done!")
+\end{lstlisting}
+
+Totototo
+
+\subsubsection{Run 10 full circuit block only}
+\begin{figure}[ht!]
+        \centering
+        \begin{subfigure}[c]{0.5\textwidth}
+                \includegraphics[width=\textwidth]{Chapitre1/Figures/exp1_10_base0_zoom.png}
+                \caption{Graph with zoom of [[-2:2][-2:2]]}
+        \end{subfigure}%
+        \caption{Resulting of 1000 data statevector}
+\end{figure}
+
+\subsubsection{Run 100 full circuit block only}
+\begin{figure}[ht!]
+        \centering
+        \begin{subfigure}[c]{0.5\textwidth}
+                \includegraphics[width=\textwidth]{Chapitre1/Figures/exp1_100_base0_nonZoom.png}
+                \caption{Graph from 10000 data statevector without zoom}
+        \end{subfigure}%
+        \begin{subfigure}[c]{0.5\textwidth}
+                \includegraphics[width=\textwidth]{Chapitre1/Figures/exp1_100_base0_zoom.png}
+                \caption{Graph with zoom of [[-2:2][-2:2]]}
         \end{subfigure}
         \caption{Resulting of 10000 data statevector}
 \end{figure}
