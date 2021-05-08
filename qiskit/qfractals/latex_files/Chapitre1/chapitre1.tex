@@ -154,6 +154,72 @@ Totototo
         \caption{Resulting of 10000 data statevector}
 \end{figure}
 
+totototo
+
+
+
+
+\subsection{Base H and multiple loops}
+totototo
+
+\subsubsection{Code}
+\begin{lstlisting}
+#Launch
+qc.h(init_q)
+for w in range(max_shots):
+    for i in range(shots):
+        if (0 <= i < shots/4) or ((shots - shots/4) < i <= shots):
+            qc.ry(pi/(2*shots), init_q)
+        else:
+            qc.ry(-pi/(2*shots), init_q)
+        qc.rz(2 * pi / shots, init_q)
+        
+        z = complex_cal(qc, statevector_sim)
+        if z != 0:
+            tab_temp.append(z)
+    qc.barrier()
+    
+    for i in range(shots):
+        if (0 <= i < shots/4) or ((shots - shots/4) < i <= shots):
+            qc.ry(-pi/(2*shots), init_q)
+        else:
+            qc.ry(pi/(2*shots), init_q)
+        qc.rz(2 * pi / shots, init_q)
+        
+        z = complex_cal(qc, statevector_sim)
+        if z != 0:
+            tab_temp.append(z)
+    qc.barrier()
+
+    if (w + 1) % 5 == 0:
+        print("Full circuit bloch :", w+1, "/", max_shots)
+
+print("Fini!")
+\end{lstlisting}
+
+\subsubsection{Run 1 full circuit block only}
+
+\subsubsection{Run 10 full circuit block only}
+\begin{figure}[ht!]
+        \centering
+        \begin{subfigure}[c]{0.5\textwidth}
+                \includegraphics[width=\textwidth]{Chapitre1/Figures/unlimit_band_10.png}
+                \caption{Graph without zoom}
+        \end{subfigure}%
+        \caption{Resulting of 1000 data statevector}
+\end{figure}
+
+\subsubsection{Run 100 full circuit block only}
+
+\begin{figure}[ht!]
+        \centering
+        \begin{subfigure}[c]{0.5\textwidth}
+                \includegraphics[width=\textwidth]{Chapitre1/Figures/unlimit_band_100.png}
+                \caption{Graph without zoom}
+        \end{subfigure}%
+        \caption{Resulting of 10000 data statevector}
+\end{figure}
+
 
 
 
