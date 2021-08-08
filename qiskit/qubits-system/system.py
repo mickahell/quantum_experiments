@@ -4,7 +4,7 @@
 
 import matplotlib.pyplot as plt
 from qiskit import Aer, QuantumCircuit, execute, IBMQ, QuantumRegister, ClassicalRegister
-from qiskit.visualization import plot_histogram, plot_gate_map, plot_error_map
+from qiskit.visualization import plot_gate_map, plot_error_map
 from qiskit.tools.monitor import job_monitor
 import math
 import random
