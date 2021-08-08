@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
-from qiskit import BasicAer, Aer, QuantumCircuit, QuantumRegister, ClassicalRegister, execute, IBMQ
+from qiskit import Aer, QuantumCircuit, QuantumRegister, ClassicalRegister, execute, IBMQ
 from qiskit.visualization import *
-from qiskit.tools.monitor import job_monitor
 import math
 
 #########################################################
