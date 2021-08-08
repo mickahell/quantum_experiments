@@ -1,6 +1,4 @@
-import matplotlib.pyplot as plt
 from qiskit import Aer, QuantumCircuit, execute, IBMQ
-from qiskit.visualization import plot_histogram
 from qiskit.tools.monitor import job_monitor
 
 typ_dice = int(input("Choisi un dès 4, 6, 8, 10, 12, 20 : "))
